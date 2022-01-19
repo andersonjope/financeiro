@@ -2,11 +2,14 @@ package br.com.jope.financeiro.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import br.com.jope.financeiro.enums.EnumClassificacaoCategoria;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +27,11 @@ public class Categoria extends BaseEntity{
 	@Column(name = "ID_CATEGORIA")
 	private Long idCategoria;
 	
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String descricao;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "classificacao", nullable = false)
+	private EnumClassificacaoCategoria classificacaoCategoria;
 	
 }

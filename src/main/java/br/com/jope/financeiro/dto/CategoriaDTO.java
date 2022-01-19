@@ -1,12 +1,14 @@
 package br.com.jope.financeiro.dto;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 import org.springframework.data.domain.Page;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import br.com.jope.financeiro.enums.EnumClassificacaoCategoria;
 import br.com.jope.financeiro.model.Categoria;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +19,7 @@ public class CategoriaDTO {
 	
 	private Long idCategoria;
 	private String descricao;
+	private EnumClassificacaoCategoria classificacaoCategoria;
 	private String mensagem;
 	
 	public CategoriaDTO() {}
@@ -25,6 +28,7 @@ public class CategoriaDTO {
 	public CategoriaDTO(Categoria categoria) {
 		this.idCategoria = categoria.getIdCategoria();
 		this.descricao = categoria.getDescricao();
+		this.classificacaoCategoria = categoria.getClassificacaoCategoria();
 	}
 	
 	public CategoriaDTO(String descricao) {
@@ -33,7 +37,13 @@ public class CategoriaDTO {
 	}
 
 	public static Page<CategoriaDTO> converte(Page<Categoria> findAll) {
-		return findAll.map(CategoriaDTO::new);
+		return findAll.map(new Function<Categoria, CategoriaDTO>() {
+
+			@Override
+			public CategoriaDTO apply(Categoria categoria) {
+				return new CategoriaDTO(categoria);
+			}
+		});
 	}
 	
 	public static Optional<CategoriaDTO> converte(Optional<Categoria> optional) {
