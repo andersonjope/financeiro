@@ -11,13 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table
-@Getter @Setter
+@Data
 @EqualsAndHashCode(callSuper = false, of = "idDespesa")
 public class Despesa extends BaseEntity {
 

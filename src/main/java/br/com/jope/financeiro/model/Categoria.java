@@ -10,13 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import br.com.jope.financeiro.enums.EnumClassificacaoCategoria;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table
-@Getter @Setter
+@Data
 @EqualsAndHashCode(callSuper = false, of = "idCategoria")
 public class Categoria extends BaseEntity{
 
