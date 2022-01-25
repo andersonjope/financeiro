@@ -1,6 +1,7 @@
 package br.com.jope.financeiro.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,8 +27,13 @@ public class Despesa extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_DESPESA")
 	private Long idDespesa;
+	
 	private String descricao;
+	
 	private BigDecimal valor;
+	
+	private LocalDate dataCadastro;
+	
 	@ManyToOne
 	@JoinColumn(name = "ID_CATEGORIA", nullable = false)
 	private Categoria categoria;

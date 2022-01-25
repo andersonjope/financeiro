@@ -3,25 +3,27 @@ package br.com.jope.financeiro.form;
 import java.math.BigDecimal;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import br.com.jope.financeiro.model.Categoria;
-import br.com.jope.financeiro.model.Receita;
+import br.com.jope.financeiro.model.Despesa;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class ReceitaForm {
+public class DespesaForm {
 
-	@NotBlank(message = "Descrição da receita obrigatória!")
+	@NotBlank(message = "Descrição da despesa obrigatória!")
 	private String descricao;
 	
+	@NotNull(message = "Categoria da despesa obrigatória, ex: 'RECEITA, DESPESA'!")
 	private Long classificacao;
 	
-	@NotBlank(message = "Valor da receita obrigatória!")
+	@NotBlank(message = "Valor da despesa obrigatória!")
 	private String valor;
 	
-	public Receita converte() {
-		Receita receita = new Receita();
+	public Despesa converte() {
+		Despesa receita = new Despesa();
 		receita.setDescricao(descricao);
 		receita.setValor(new BigDecimal(valor));
 		receita.setCategoria(getCategoria());
@@ -34,9 +36,9 @@ public class ReceitaForm {
 		return categoria;
 	}
 
-	public Receita converte(Long id) {
-		Receita receita = new Receita();
-		receita.setIdReceita(id);
+	public Despesa converte(Long id) {
+		Despesa receita = new Despesa();
+		receita.setIdDespesa(id);
 		receita.setDescricao(descricao);
 		receita.setValor(new BigDecimal(valor));
 		receita.setCategoria(getCategoria());
