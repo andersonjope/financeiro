@@ -3,7 +3,6 @@ package br.com.jope.financeiro.form;
 import java.math.BigDecimal;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import br.com.jope.financeiro.model.Categoria;
 import br.com.jope.financeiro.model.Despesa;
@@ -16,8 +15,7 @@ public class DespesaForm {
 	@NotBlank(message = "Descrição da despesa obrigatória!")
 	private String descricao;
 	
-	@NotNull(message = "Categoria da despesa obrigatória, ex: 'RECEITA, DESPESA'!")
-	private Long classificacao;
+	private Long categoria;
 	
 	@NotBlank(message = "Valor da despesa obrigatória!")
 	private String valor;
@@ -32,7 +30,7 @@ public class DespesaForm {
 
 	private Categoria getCategoria() {
 		Categoria categoria = new Categoria();
-		categoria.setIdCategoria(classificacao);
+		categoria.setIdCategoria(this.categoria);
 		return categoria;
 	}
 

@@ -1,7 +1,6 @@
 package br.com.jope.financeiro.controller;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.OK;
 
 import java.util.Optional;
 
@@ -14,10 +13,8 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,19 +31,6 @@ public class CategoriaController {
 	
 	@Autowired
 	private CategoriaService categoriaService;
-
-	@PostMapping
-	public ResponseEntity<CategoriaDTO> cadastrar(@RequestBody @Valid CategoriaForm cadastroForm) {
-		Categoria categoria = cadastroForm.converte();
-		
-		CategoriaDTO categoriaDTO = categoriaService.salvar(categoria);
-		
-		if(categoriaDTO.isMensagem()) {
-			return new ResponseEntity<CategoriaDTO>(categoriaDTO, NOT_FOUND);
-		}
-		
-		return new ResponseEntity<CategoriaDTO>(categoriaDTO, HttpStatus.CREATED);
-	}
 	
 	@GetMapping
 	public ResponseEntity<Page<CategoriaDTO>> listar(@PageableDefault(sort = "descricao", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao){
@@ -79,13 +63,6 @@ public class CategoriaController {
 		}
 		
 		return new ResponseEntity<CategoriaDTO>(categoriaDTO, HttpStatus.CREATED);
-	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<CategoriaDTO> deletar(@PathVariable("id") Long id) {
-		CategoriaDTO categoriaDTO = categoriaService.deletar(id);
-		
-		return new ResponseEntity<CategoriaDTO>(categoriaDTO, OK);
 	}
 	
 }

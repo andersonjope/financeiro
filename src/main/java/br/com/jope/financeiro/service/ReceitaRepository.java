@@ -13,7 +13,12 @@ public interface ReceitaRepository extends JpaRepository<Receita, Long> {
 	
 	List<Receita> findByDescricao(String decricao);
 	
-	@Query("select r from Receita r join r.categoria c where c.idCategoria = :idCategoria and month(r.dataCadastro) = :mes ")
-	List<Receita> validaMesCadastroCategoria(Long idCategoria, Integer mes);
+	@Query("select r from Receita r where r.descricao = :descricao and month(r.dataCadastro) = :mes ")
+	List<Receita> validaMesCadastroCategoria(String descricao, Integer mes);
+
+	List<Receita> findByDescricaoContainingIgnoreCase(String descricao);
+
+	@Query("select r from Receita r where year(r.dataCadastro) = :ano and month(r.dataCadastro) = :mes ")
+	List<Receita> findByAnoMes(Integer ano, Integer mes);
 	
 }

@@ -3,6 +3,7 @@ package br.com.jope.financeiro.controller;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -86,6 +88,20 @@ public class ReceitaController {
 		ReceitaDTO receitaDTO = receitaService.deletar(id);
 		
 		return new ResponseEntity<ReceitaDTO>(receitaDTO, OK);
+	}
+	
+	@GetMapping(params = "descricao")
+	public ResponseEntity<List<ReceitaDTO>> filtroPorDescricao(@Param("descricao") String descricao){
+		List<ReceitaDTO> list = receitaService.findByDescricaoContainingIgnoreCase(descricao);
+		
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/{ano}/{mes}")
+	public ResponseEntity<List<ReceitaDTO>> filtroPorAnoMes(@PathVariable("ano") Integer ano, @PathVariable("mes") Integer mes){
+		List<ReceitaDTO> list = receitaService.findByAnoMes(ano, mes);
+		
+		return ResponseEntity.ok(list);
 	}
 	
 }

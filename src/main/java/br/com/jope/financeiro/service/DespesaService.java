@@ -1,9 +1,9 @@
 package br.com.jope.financeiro.service;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.jope.financeiro.dto.DespesaDTO;
+import br.com.jope.financeiro.enums.EnumCategoria;
+import br.com.jope.financeiro.model.Categoria;
 import br.com.jope.financeiro.model.Despesa;
 
 @Service
@@ -19,10 +21,15 @@ public class DespesaService {
 	@Autowired
 	private DespesaRepository repository;
 	
+	@Autowired
+	private CategoriaRepository categoriaRepository;
+	
 	public DespesaDTO salvar(Despesa despesa) {
-		if(!repository.validaMesCadastroCategoria(despesa.getCategoria().getIdCategoria(), getMonth().getValue()).isEmpty()) {
-			return new DespesaDTO(despesa.getDescricao());
+		if(despesa.getCategoria().getIdCategoria() == null) {
+			Categoria categoria = categoriaRepository.findByDescricao(EnumCategoria.OUTRAS.getDescricao());
+			despesa.setCategoria(categoria);
 		}
+		
 		despesa.setDataCadastro(LocalDate.now());
 		repository.save(despesa);
 		
@@ -42,16 +49,6 @@ public class DespesaService {
 	}
 
 	public DespesaDTO atualizar(Despesa despesa) {
-		List<Despesa> despesaList = repository.validaMesCadastroCategoria(despesa.getCategoria().getIdCategoria(), getMonth().getValue());
-		long existe = despesaList
-			.stream()
-			.filter(r -> !r.getIdDespesa().equals(despesa.getIdDespesa()))
-			.count();
-		
-		if(existe > 0) {
-			return new DespesaDTO(despesa.getDescricao());
-		}
-		
 		Optional<Despesa> optional = repository.findById(despesa.getIdDespesa());
 		if(optional.isPresent()) {
 			Despesa despesaRecuperada = optional.get();
@@ -71,8 +68,16 @@ public class DespesaService {
 		return DespesaDTO.converte(optional).get();
 	}
 
-	private Month getMonth() {
-		return LocalDate.now().getMonth();
-	}
+	public List<DespesaDTO> findByDescricaoContainingIgnoreCase(String descricao){
+		List<Despesa> list = repository.findByDescricaoContainingIgnoreCase(descricao);
 	
+		return list.stream().map(DespesaDTO::new).collect(Collectors.toList());
+	}
+
+	public List<DespesaDTO> findByAnoMes(Integer ano, Integer mes) {
+		List<Despesa> list = repository.findByAnoMes(ano, mes);
+		
+		return list.stream().map(DespesaDTO::new).collect(Collectors.toList());
+	}
+
 }

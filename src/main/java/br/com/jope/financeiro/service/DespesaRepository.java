@@ -12,8 +12,10 @@ import br.com.jope.financeiro.model.Despesa;
 public interface DespesaRepository extends JpaRepository<Despesa, Long> {
 	
 	List<Despesa> findByDescricao(String decricao);
-	
-	@Query("select d from Despesa d join d.categoria c where c.idCategoria = :idCategoria and month(d.dataCadastro) = :mes ")
-	List<Despesa> validaMesCadastroCategoria(Long idCategoria, Integer mes);
+
+	List<Despesa> findByDescricaoContainingIgnoreCase(String descricao);
+
+	@Query("select d from Despesa d where year(d.dataCadastro) = :ano and month(d.dataCadastro) = :mes ")
+	List<Despesa> findByAnoMes(Integer ano, Integer mes);
 	
 }

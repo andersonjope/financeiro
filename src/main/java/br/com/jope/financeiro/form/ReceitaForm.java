@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import javax.validation.constraints.NotBlank;
 
-import br.com.jope.financeiro.model.Categoria;
 import br.com.jope.financeiro.model.Receita;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,8 +14,6 @@ public class ReceitaForm {
 	@NotBlank(message = "Descrição da receita obrigatória!")
 	private String descricao;
 	
-	private Long classificacao;
-	
 	@NotBlank(message = "Valor da receita obrigatória!")
 	private String valor;
 	
@@ -24,14 +21,7 @@ public class ReceitaForm {
 		Receita receita = new Receita();
 		receita.setDescricao(descricao);
 		receita.setValor(new BigDecimal(valor));
-		receita.setCategoria(getCategoria());
 		return receita;
-	}
-
-	private Categoria getCategoria() {
-		Categoria categoria = new Categoria();
-		categoria.setIdCategoria(classificacao);
-		return categoria;
 	}
 
 	public Receita converte(Long id) {
@@ -39,7 +29,6 @@ public class ReceitaForm {
 		receita.setIdReceita(id);
 		receita.setDescricao(descricao);
 		receita.setValor(new BigDecimal(valor));
-		receita.setCategoria(getCategoria());
 		return receita;
 	}
 

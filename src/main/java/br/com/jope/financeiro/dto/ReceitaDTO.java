@@ -20,7 +20,6 @@ public class ReceitaDTO {
 	private Long idReceita;
 	private String descricao;
 	private String valor;
-	private String classificacao;
 	private String dataCadastro;
 	private String mensagem;
 	
@@ -33,7 +32,6 @@ public class ReceitaDTO {
 		this.descricao = receita.getDescricao();
 		this.valor = String.valueOf(receita.getValor());
 		this.dataCadastro = receita.getDataCadastro().format(formatter);
-		this.classificacao = receita.getCategoria().getDescricao();
 	}
 	
 	public ReceitaDTO(String descricao) {

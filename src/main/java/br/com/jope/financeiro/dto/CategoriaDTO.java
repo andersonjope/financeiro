@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import br.com.jope.financeiro.enums.EnumClassificacaoCategoria;
 import br.com.jope.financeiro.model.Categoria;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +18,6 @@ public class CategoriaDTO {
 	
 	private Long idCategoria;
 	private String descricao;
-	private EnumClassificacaoCategoria classificacaoCategoria;
 	private String mensagem;
 	
 	public CategoriaDTO() {}
@@ -28,7 +26,6 @@ public class CategoriaDTO {
 	public CategoriaDTO(Categoria categoria) {
 		this.idCategoria = categoria.getIdCategoria();
 		this.descricao = categoria.getDescricao();
-		this.classificacaoCategoria = categoria.getClassificacaoCategoria();
 	}
 	
 	public CategoriaDTO(String descricao) {

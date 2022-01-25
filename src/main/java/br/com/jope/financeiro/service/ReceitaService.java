@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +21,7 @@ public class ReceitaService {
 	private ReceitaRepository repository;
 	
 	public ReceitaDTO salvar(Receita receita) {
-		if(!repository.validaMesCadastroCategoria(receita.getCategoria().getIdCategoria(), getMonth().getValue()).isEmpty()) {
+		if(!repository.validaMesCadastroCategoria(receita.getDescricao(), getMonth().getValue()).isEmpty()) {
 			return new ReceitaDTO(receita.getDescricao());
 		}
 		receita.setDataCadastro(LocalDate.now());
@@ -42,7 +43,7 @@ public class ReceitaService {
 	}
 
 	public ReceitaDTO atualizar(Receita receita) {
-		List<Receita> receitaList = repository.validaMesCadastroCategoria(receita.getCategoria().getIdCategoria(), getMonth().getValue());
+		List<Receita> receitaList = repository.validaMesCadastroCategoria(receita.getDescricao(), getMonth().getValue());
 		long existe = receitaList
 			.stream()
 			.filter(r -> !r.getIdReceita().equals(receita.getIdReceita()))
@@ -73,6 +74,18 @@ public class ReceitaService {
 
 	private Month getMonth() {
 		return LocalDate.now().getMonth();
+	}
+
+	public List<ReceitaDTO> findByDescricaoContainingIgnoreCase(String descricao) {		
+		List<Receita> list = repository.findByDescricaoContainingIgnoreCase(descricao);
+		
+		return list.stream().map(ReceitaDTO::new).collect(Collectors.toList());
+	}
+
+	public List<ReceitaDTO> findByAnoMes(Integer ano, Integer mes) {
+		List<Receita> list = repository.findByAnoMes(ano, mes);
+		
+		return list.stream().map(ReceitaDTO::new).collect(Collectors.toList());
 	}
 	
 }
