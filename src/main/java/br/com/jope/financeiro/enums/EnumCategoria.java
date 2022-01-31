@@ -21,4 +21,13 @@ public enum EnumCategoria {
 		this.codigo = codigo;
 		this.descricao = descricao;
 	}
+	
+	public static EnumCategoria getCategoria(Long codigo) {
+		for(EnumCategoria enumCategoria : values()) {
+			if(enumCategoria.getCodigo().equals(codigo)) {
+				return enumCategoria;
+			}
+		}
+		return null;
+	}
 }
