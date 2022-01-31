@@ -20,6 +20,19 @@ public class DespesaForm {
 	@NotBlank(message = "Valor da despesa obrigatória!")
 	private String valor;
 	
+	public DespesaForm() {}
+	
+	public DespesaForm(String descricao, String valor) {
+		this.descricao = descricao;
+		this.valor = valor;
+	}
+	
+	public DespesaForm(String descricao, String valor, Long categoria) {
+		this.descricao = descricao;
+		this.valor = valor;
+		this.categoria = categoria;
+	}
+
 	public Despesa converte() {
 		Despesa receita = new Despesa();
 		receita.setDescricao(descricao);

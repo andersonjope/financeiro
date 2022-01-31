@@ -4,25 +4,18 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.util.Optional;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jope.financeiro.dto.CategoriaDTO;
-import br.com.jope.financeiro.form.CategoriaForm;
-import br.com.jope.financeiro.model.Categoria;
 import br.com.jope.financeiro.service.CategoriaService;
 
 @RestController
@@ -50,19 +43,6 @@ public class CategoriaController {
 		}
 		
 		return ResponseEntity.ok(optional.get());
-	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<CategoriaDTO> atualizar(@PathVariable("id") Long id,  @RequestBody @Valid CategoriaForm cadastroForm) {
-		Categoria categoria = cadastroForm.converte(id);
-		
-		CategoriaDTO categoriaDTO = categoriaService.atualizar(categoria);
-		
-		if(categoriaDTO.isMensagem()) {
-			return new ResponseEntity<CategoriaDTO>(categoriaDTO, NOT_FOUND);
-		}
-		
-		return new ResponseEntity<CategoriaDTO>(categoriaDTO, HttpStatus.CREATED);
 	}
 	
 }

@@ -17,6 +17,13 @@ public class ReceitaForm {
 	@NotBlank(message = "Valor da receita obrigatória!")
 	private String valor;
 	
+	public ReceitaForm() {}
+	
+	public ReceitaForm(String descricao, String valor) {
+		this.descricao = descricao;
+		this.valor = valor;
+	}
+
 	public Receita converte() {
 		Receita receita = new Receita();
 		receita.setDescricao(descricao);

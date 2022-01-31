@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import br.com.jope.financeiro.model.Receita;
+import br.com.jope.financeiro.model.projection.ReceitaValor;
 
 @Repository
 public interface ReceitaRepository extends JpaRepository<Receita, Long> {
@@ -20,5 +21,9 @@ public interface ReceitaRepository extends JpaRepository<Receita, Long> {
 
 	@Query("select r from Receita r where year(r.dataCadastro) = :ano and month(r.dataCadastro) = :mes ")
 	List<Receita> findByAnoMes(Integer ano, Integer mes);
+
+	
+	@Query(value = "select sum(r.valor) as valor from receita r where year(r.data_cadastro) = :ano and month(r.data_cadastro) = :mes ", nativeQuery = true)
+	List<ReceitaValor> loadReceitaPorAnoMes(Integer ano, Integer mes);
 	
 }
