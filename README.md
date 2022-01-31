@@ -21,3 +21,11 @@ Na parte de Test foi utilizada o SpringBootTest com MockMvc.
 
 MySQL 8.0.24
 
+### 🛠 Tecnologias
+
+As seguintes ferramentas foram usadas na construção do projeto:
+
+- [Spring Boot](https://spring.io/projects/spring-boot)
+- [Spring Data](https://spring.io/projects/spring-data)
+- [Spring Tools](https://spring.io/tools)
+- [MySQL](https://www.mysql.com/)
