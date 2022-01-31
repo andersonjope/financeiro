@@ -16,3 +16,8 @@ Foi incluído o FrameWork DevTools para agilizar atualização do código no mom
 # SpringBootTest com MokcMvc
 
 Na parte de Test foi utilizada o SpringBootTest com MockMvc.
+
+# Banco de Dados
+
+MySQL 8.0.24
+
