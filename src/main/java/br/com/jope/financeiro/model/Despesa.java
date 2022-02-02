@@ -37,5 +37,9 @@ public class Despesa extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "ID_CATEGORIA", nullable = false)
 	private Categoria categoria;
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_USUARIO", nullable = false)
+	private Usuario usuario;
 
 }

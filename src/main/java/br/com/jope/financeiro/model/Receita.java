@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -31,5 +33,9 @@ public class Receita extends BaseEntity {
 	private BigDecimal valor;
 	
 	private LocalDate dataCadastro;
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_USUARIO", nullable = false)
+	private Usuario usuario;
 	
 }

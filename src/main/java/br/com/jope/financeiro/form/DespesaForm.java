@@ -34,11 +34,11 @@ public class DespesaForm {
 	}
 
 	public Despesa converte() {
-		Despesa receita = new Despesa();
-		receita.setDescricao(descricao);
-		receita.setValor(new BigDecimal(valor));
-		receita.setCategoria(getCategoria());
-		return receita;
+		Despesa depesa = new Despesa();
+		depesa.setDescricao(descricao);
+		depesa.setValor(new BigDecimal(valor));
+		depesa.setCategoria(getCategoria());
+		return depesa;
 	}
 
 	private Categoria getCategoria() {
@@ -48,12 +48,12 @@ public class DespesaForm {
 	}
 
 	public Despesa converte(Long id) {
-		Despesa receita = new Despesa();
-		receita.setIdDespesa(id);
-		receita.setDescricao(descricao);
-		receita.setValor(new BigDecimal(valor));
-		receita.setCategoria(getCategoria());
-		return receita;
+		Despesa despesa = new Despesa();
+		despesa.setIdDespesa(id);
+		despesa.setDescricao(descricao);
+		despesa.setValor(new BigDecimal(valor));
+		despesa.setCategoria(getCategoria());
+		return despesa;
 	}
 
 }
