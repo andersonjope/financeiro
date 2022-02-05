@@ -22,6 +22,7 @@ public class DespesaDTO {
 	private String valor;
 	private String categoria;
 	private String dataCadastro;
+	private String nomeUsuario;
 	private String mensagem;
 	
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -34,6 +35,7 @@ public class DespesaDTO {
 		this.valor = String.valueOf(despesa.getValor());
 		this.dataCadastro = despesa.getDataCadastro().format(formatter);
 		this.categoria = despesa.getCategoria().getDescricao();
+		this.nomeUsuario = despesa.getUsuario().getNome();
 	}
 	
 	public DespesaDTO(String descricao) {

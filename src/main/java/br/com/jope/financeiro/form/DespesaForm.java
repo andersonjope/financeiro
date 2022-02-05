@@ -6,6 +6,7 @@ import javax.validation.constraints.NotBlank;
 
 import br.com.jope.financeiro.model.Categoria;
 import br.com.jope.financeiro.model.Despesa;
+import br.com.jope.financeiro.model.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,12 +34,13 @@ public class DespesaForm {
 		this.categoria = categoria;
 	}
 
-	public Despesa converte() {
-		Despesa depesa = new Despesa();
-		depesa.setDescricao(descricao);
-		depesa.setValor(new BigDecimal(valor));
-		depesa.setCategoria(getCategoria());
-		return depesa;
+	public Despesa converte(Usuario usuario) {
+		Despesa despesa = new Despesa();
+		despesa.setDescricao(descricao);
+		despesa.setValor(new BigDecimal(valor));
+		despesa.setCategoria(getCategoria());
+		despesa.setUsuario(usuario);
+		return despesa;
 	}
 
 	private Categoria getCategoria() {

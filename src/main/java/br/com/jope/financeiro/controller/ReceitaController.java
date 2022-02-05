@@ -16,6 +16,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.jope.financeiro.dto.ReceitaDTO;
 import br.com.jope.financeiro.form.ReceitaForm;
 import br.com.jope.financeiro.model.Receita;
+import br.com.jope.financeiro.model.Usuario;
+import br.com.jope.financeiro.security.config.IAuthenticationFacade;
 import br.com.jope.financeiro.service.ReceitaService;
 
 @RestController
@@ -35,11 +38,17 @@ import br.com.jope.financeiro.service.ReceitaService;
 public class ReceitaController {
 	
 	@Autowired
+	private IAuthenticationFacade authenticationFacade;
+	
+	@Autowired
 	private ReceitaService receitaService;
 
 	@PostMapping
 	public ResponseEntity<ReceitaDTO> cadastrar(@RequestBody @Valid ReceitaForm receitaForm) {
-		Receita receita = receitaForm.converte();
+		Authentication authentication = authenticationFacade.getAuthentication();
+		Usuario usuario = (Usuario) authentication.getPrincipal();
+		
+		Receita receita = receitaForm.converte(usuario);
 		
 		ReceitaDTO receitaDTO = receitaService.salvar(receita);
 		

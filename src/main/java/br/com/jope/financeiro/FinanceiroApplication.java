@@ -35,7 +35,7 @@ public class FinanceiroApplication implements ApplicationRunner {
 
 	private void salvar(EnumUsuario enumUsuario) {
 		Usuario usuario = new Usuario();
-		usuario.setIdUsuario(enumUsuario.getCodigo());
+		usuario.setId(enumUsuario.getCodigo());
 		usuario.setNome(enumUsuario.getNome());
 		usuario.setLogin(enumUsuario.getLogin());
 		usuario.setSenha(enumUsuario.getSenha());

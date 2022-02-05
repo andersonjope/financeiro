@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public enum EnumPerfil {
 	
-	ADMIN(1l, "ADMIN"),
-	USER(2l, "USER");
+	ROLE_ADMIN(1l, "ADMIN"),
+	ROLE_USER(2l, "USER");
 	
 	private final Long codigo;
 	private final String descricao;

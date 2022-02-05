@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public enum EnumUsuario {
 
-	USUARIO_ADMIN(1L, "Administrador", "usuario.admin", "123456", EnumPerfil.ADMIN.getDescricao()),
-	USUARIO_USER(2L, "User", "usuario.user", "123456", EnumPerfil.USER.getDescricao());
+	USUARIO_ADMIN(1L, "Administrador", "usuario.admin", "$2a$10$IsmFXAOsNe4Tprh0Wuu/qebuAFgSrTsOH2PFnnCUCv6iSzuKDqc5S", EnumPerfil.ROLE_ADMIN.getDescricao()),
+	USUARIO_USER(2L, "User", "usuario.user", "$2a$10$IsmFXAOsNe4Tprh0Wuu/qebuAFgSrTsOH2PFnnCUCv6iSzuKDqc5S", EnumPerfil.ROLE_USER.getDescricao());
 	
 	private final Long codigo;
 	private final String nome;

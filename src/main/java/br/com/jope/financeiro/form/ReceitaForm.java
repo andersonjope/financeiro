@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import javax.validation.constraints.NotBlank;
 
 import br.com.jope.financeiro.model.Receita;
+import br.com.jope.financeiro.model.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,10 +25,11 @@ public class ReceitaForm {
 		this.valor = valor;
 	}
 
-	public Receita converte() {
+	public Receita converte(Usuario usuario) {
 		Receita receita = new Receita();
 		receita.setDescricao(descricao);
 		receita.setValor(new BigDecimal(valor));
+		receita.setUsuario(usuario);
 		return receita;
 	}
 

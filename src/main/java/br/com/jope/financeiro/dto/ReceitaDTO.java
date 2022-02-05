@@ -22,6 +22,7 @@ public class ReceitaDTO {
 	private String valor;
 	private String dataCadastro;
 	private String mensagem;
+	private String nomeUsuario;
 	
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
@@ -32,6 +33,7 @@ public class ReceitaDTO {
 		this.descricao = receita.getDescricao();
 		this.valor = String.valueOf(receita.getValor());
 		this.dataCadastro = receita.getDataCadastro().format(formatter);
+		this.nomeUsuario = receita.getUsuario().getNome();
 	}
 	
 	public ReceitaDTO(String descricao) {
