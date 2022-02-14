@@ -27,7 +27,6 @@ public class Usuario implements UserDetails {
 	private static final long serialVersionUID = 7755686008377203785L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_USUARIO")
 	private Long id;
 	
