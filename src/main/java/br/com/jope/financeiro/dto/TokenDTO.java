@@ -7,6 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class TokenDTO {
 	
+	public TokenDTO(){}
+	
 	private String token;
 	private String tipo;
 	

@@ -26,6 +26,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.jope.financeiro.dto.ReceitaDTO;
+import br.com.jope.financeiro.dto.TokenDTO;
+import br.com.jope.financeiro.enums.EnumUsuario;
+import br.com.jope.financeiro.form.LoginForm;
 import br.com.jope.financeiro.form.ReceitaForm;
 
 
@@ -46,6 +49,23 @@ class ReceitaControllerMockMvcTest extends AbstractTest {
 	private ReceitaForm form;
 	private Long idReceita;
 	
+	private synchronized TokenDTO loadAutentificacao() throws Exception {
+		LoginForm loginForm = new LoginForm(EnumUsuario.USUARIO_ADMIN.getLogin(), "123456");
+		
+		String json = mapper.writeValueAsString(loginForm);
+		
+		MvcResult result = this.mockMvc
+			.perform(post(ENDPOINT_AUTH)
+				.contentType(contentType)
+				.content(json))
+			.andExpect(status().isOk())
+			.andReturn();
+				
+		String dadosLogin = result.getResponse().getContentAsString();
+		TokenDTO token = mapper.readValue(dadosLogin, TokenDTO.class);
+		return token;
+	}
+	
 	@Test
 	@Order(0)
 	void cadastrarReceitaValidaCamposObrigatorios() throws Exception {
@@ -53,7 +73,10 @@ class ReceitaControllerMockMvcTest extends AbstractTest {
 
 		String json = mapper.writeValueAsString(form);
 		
+		TokenDTO token = loadAutentificacao();
+		
 		this.mockMvc.perform(post(URL)
+				.header("Authorization", token.getTipo() + " " + token.getToken())
 				.contentType(contentType)
 				.content(json))
 			.andExpect(status().isBadRequest())
@@ -68,7 +91,10 @@ class ReceitaControllerMockMvcTest extends AbstractTest {
 		
 		String json = mapper.writeValueAsString(form);
 		
+		TokenDTO token = loadAutentificacao();
+		
 		MvcResult result = this.mockMvc.perform(post(URL)
+				.header("Authorization", token.getTipo() + " " + token.getToken())
 				.contentType(contentType)
 				.content(json))
 		.andExpect(status().isCreated())
@@ -85,7 +111,10 @@ class ReceitaControllerMockMvcTest extends AbstractTest {
 		form = new ReceitaForm(DESCRICAO, "1000");
 		String json = mapper.writeValueAsString(form);
 		
+		TokenDTO token = loadAutentificacao();
+		
 		this.mockMvc.perform(post(URL)
+				.header("Authorization", token.getTipo() + " " + token.getToken())
 				.contentType(contentType)
 				.content(json))
 		.andExpect(status().isNotFound());		
@@ -94,7 +123,10 @@ class ReceitaControllerMockMvcTest extends AbstractTest {
 	@Test
 	@Order(3)
 	void listaReceitasCadastradas() throws Exception {
+		TokenDTO token = loadAutentificacao();
+		
 		MvcResult result = this.mockMvc.perform(get(URL)
+				.header("Authorization", token.getTipo() + " " + token.getToken())
 				.contentType(contentType))
 		.andExpect(status().isOk())
 		.andReturn();
@@ -107,7 +139,10 @@ class ReceitaControllerMockMvcTest extends AbstractTest {
 	@Test
 	@Order(4)
 	void exibeReceitasCadastrada() throws Exception {
+		TokenDTO token = loadAutentificacao();
+		
 		MvcResult result = this.mockMvc.perform(get(URL + "/" + this.idReceita)
+				.header("Authorization", token.getTipo() + " " + token.getToken())
 				.contentType(contentType))
 				.andExpect(status().isOk())
 				.andReturn();
@@ -125,7 +160,10 @@ class ReceitaControllerMockMvcTest extends AbstractTest {
 		form = new ReceitaForm(descricaoAlterado, "1000");
 		String json = mapper.writeValueAsString(form);
 		
+		TokenDTO token = loadAutentificacao();
+		
 		MvcResult result = this.mockMvc.perform(put(URL + "/" + this.idReceita)
+				.header("Authorization", token.getTipo() + " " + token.getToken())
 				.contentType(contentType)
 				.content(json))
 				.andExpect(status().isCreated())
@@ -140,8 +178,11 @@ class ReceitaControllerMockMvcTest extends AbstractTest {
 	@SuppressWarnings("static-access")
 	@Test
 	@Order(6)
-	void consultaReceitasCadastradaPorDescricao() throws Exception {		
+	void consultaReceitasCadastradaPorDescricao() throws Exception {	
+		TokenDTO token = loadAutentificacao();
+		
 		MvcResult result = this.mockMvc.perform(get(URL + "?descricao=" + this.DESCRICAO)
+				.header("Authorization", token.getTipo() + " " + token.getToken())
 				.contentType(contentType))
 				.andExpect(status().isOk())
 				.andReturn();
@@ -154,8 +195,11 @@ class ReceitaControllerMockMvcTest extends AbstractTest {
 	
 	@Test
 	@Order(7)
-	void consultaReceitasCadastradaPorAnoMes() throws Exception {		
+	void consultaReceitasCadastradaPorAnoMes() throws Exception {	
+		TokenDTO token = loadAutentificacao();
+		
 		MvcResult result = this.mockMvc.perform(get(URL + "/" + LocalDate.now().getYear() + "/" + LocalDate.now().getMonth().getValue())
+				.header("Authorization", token.getTipo() + " " + token.getToken())
 				.contentType(contentType))
 				.andExpect(status().isOk())
 				.andReturn();
@@ -168,8 +212,11 @@ class ReceitaControllerMockMvcTest extends AbstractTest {
 	
 	@Test
 	@Order(8)
-	void removeReceitaCadastrada() throws Exception {		
+	void removeReceitaCadastrada() throws Exception {
+		TokenDTO token = loadAutentificacao();
+		
 		this.mockMvc.perform(delete(URL + "/" + this.idReceita)
+			.header("Authorization", token.getTipo() + " " + token.getToken())
 			.contentType(contentType))
 			.andExpect(status().isOk())
 			.andReturn();		

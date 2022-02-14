@@ -23,10 +23,12 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.Assert;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.jope.financeiro.dto.DespesaDTO;
+import br.com.jope.financeiro.dto.TokenDTO;
+import br.com.jope.financeiro.enums.EnumUsuario;
 import br.com.jope.financeiro.form.DespesaForm;
+import br.com.jope.financeiro.form.LoginForm;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -38,13 +40,29 @@ class DespesaControllerMockMvcTest extends AbstractTest {
 	private static final Charset UTF_8 = Charset.forName("UTF-8");
 	private static final String DESCRICAO = "Despesa teste";
 	private static final String URL = "/despesas";
-	private ObjectMapper mapper = new ObjectMapper();
 	
 	@Autowired
 	private MockMvc mockMvc;
 	
 	private DespesaForm form;
 	private Long idDespesa;
+	
+	private synchronized TokenDTO loadAutentificacao() throws Exception {
+		LoginForm loginForm = new LoginForm(EnumUsuario.USUARIO_ADMIN.getLogin(), "123456");
+		
+		String json = mapper.writeValueAsString(loginForm);
+		
+		MvcResult result = this.mockMvc
+			.perform(post(ENDPOINT_AUTH)
+				.contentType(contentType)
+				.content(json))
+			.andExpect(status().isOk())
+			.andReturn();
+				
+		String dadosLogin = result.getResponse().getContentAsString();
+		TokenDTO token = mapper.readValue(dadosLogin, TokenDTO.class);
+		return token;
+	}
 	
 	@Test
 	@Order(0)
@@ -53,7 +71,10 @@ class DespesaControllerMockMvcTest extends AbstractTest {
 
 		String json = mapper.writeValueAsString(form);
 		
+		TokenDTO token = loadAutentificacao();
+		
 		this.mockMvc.perform(post(URL)
+				.header("Authorization", token.getTipo() + " " + token.getToken())
 				.contentType(contentType)
 				.content(json))
 			.andExpect(status().isBadRequest())
@@ -68,7 +89,10 @@ class DespesaControllerMockMvcTest extends AbstractTest {
 		
 		String json = mapper.writeValueAsString(form);
 		
+		TokenDTO token = loadAutentificacao();
+		
 		MvcResult result = this.mockMvc.perform(post(URL)
+				.header("Authorization", token.getTipo() + " " + token.getToken())
 				.contentType(contentType)
 				.content(json))
 		.andExpect(status().isCreated())
@@ -82,7 +106,10 @@ class DespesaControllerMockMvcTest extends AbstractTest {
 	@Test
 	@Order(2)
 	void listaDespesasCadastradas() throws Exception {
+		TokenDTO token = loadAutentificacao();
+		
 		MvcResult result = this.mockMvc.perform(get(URL)
+				.header("Authorization", token.getTipo() + " " + token.getToken())
 				.contentType(contentType))
 		.andExpect(status().isOk())
 		.andReturn();
@@ -95,7 +122,10 @@ class DespesaControllerMockMvcTest extends AbstractTest {
 	@Test
 	@Order(3)
 	void exibeDespesasCadastrada() throws Exception {
+		TokenDTO token = loadAutentificacao();
+		
 		MvcResult result = this.mockMvc.perform(get(URL + "/" + this.idDespesa)
+				.header("Authorization", token.getTipo() + " " + token.getToken())
 				.contentType(contentType))
 				.andExpect(status().isOk())
 				.andReturn();
@@ -109,11 +139,14 @@ class DespesaControllerMockMvcTest extends AbstractTest {
 	@Test
 	@Order(4)
 	void atualizaDespesasCadastrada() throws Exception {
+		TokenDTO token = loadAutentificacao();
+		
 		String descricaoAlterado = DESCRICAO + " Alterado";
 		form = new DespesaForm(descricaoAlterado, "1000");
 		String json = mapper.writeValueAsString(form);
 		
 		MvcResult result = this.mockMvc.perform(put(URL + "/" + this.idDespesa)
+				.header("Authorization", token.getTipo() + " " + token.getToken())
 				.contentType(contentType)
 				.content(json))
 				.andExpect(status().isCreated())
@@ -129,7 +162,10 @@ class DespesaControllerMockMvcTest extends AbstractTest {
 	@Test
 	@Order(5)
 	void consultaDespesasCadastradaPorDescricao() throws Exception {		
+		TokenDTO token = loadAutentificacao();
+		
 		MvcResult result = this.mockMvc.perform(get(URL + "?descricao=" + this.DESCRICAO)
+				.header("Authorization", token.getTipo() + " " + token.getToken())
 				.contentType(contentType))
 				.andExpect(status().isOk())
 				.andReturn();
@@ -142,8 +178,11 @@ class DespesaControllerMockMvcTest extends AbstractTest {
 	
 	@Test
 	@Order(6)
-	void consultaDespesasCadastradaPorAnoMes() throws Exception {		
+	void consultaDespesasCadastradaPorAnoMes() throws Exception {	
+		TokenDTO token = loadAutentificacao();
+		
 		MvcResult result = this.mockMvc.perform(get(URL + "/" + LocalDate.now().getYear() + "/" + LocalDate.now().getMonth().getValue())
+				.header("Authorization", token.getTipo() + " " + token.getToken())
 				.contentType(contentType))
 				.andExpect(status().isOk())
 				.andReturn();
@@ -156,8 +195,11 @@ class DespesaControllerMockMvcTest extends AbstractTest {
 	
 	@Test
 	@Order(7)
-	void removeDespesaCadastrada() throws Exception {		
+	void removeDespesaCadastrada() throws Exception {
+		TokenDTO token = loadAutentificacao();
+		
 		this.mockMvc.perform(delete(URL + "/" + this.idDespesa)
+			.header("Authorization", token.getTipo() + " " + token.getToken())
 			.contentType(contentType))
 			.andExpect(status().isOk())
 			.andReturn();		
