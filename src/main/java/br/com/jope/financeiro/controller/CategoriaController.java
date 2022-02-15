@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jope.financeiro.dto.CategoriaDTO;
 import br.com.jope.financeiro.service.CategoriaService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("categorias")
+@SecurityRequirement(name = "financeiro-api")
 public class CategoriaController {
 	
 	@Autowired

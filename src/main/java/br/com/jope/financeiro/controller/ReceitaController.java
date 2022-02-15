@@ -32,9 +32,11 @@ import br.com.jope.financeiro.model.Receita;
 import br.com.jope.financeiro.model.Usuario;
 import br.com.jope.financeiro.security.config.IAuthenticationFacade;
 import br.com.jope.financeiro.service.ReceitaService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("receitas")
+@SecurityRequirement(name = "financeiro-api")
 public class ReceitaController {
 	
 	@Autowired

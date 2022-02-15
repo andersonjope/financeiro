@@ -26,11 +26,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 	@Autowired
 	private TokenService tokenService;
 	
-	public JwtTokenFilter(UsuarioService usuarioService, TokenService tokenService) {
-		this.usuarioService = usuarioService;
-		this.tokenService = tokenService;
-	}
-
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 		String token = recuperaToken(request); 
@@ -58,5 +53,5 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 		
 		return token.split(" ")[1].trim();
 	}
-
+	
 }

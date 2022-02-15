@@ -32,9 +32,11 @@ import br.com.jope.financeiro.model.Despesa;
 import br.com.jope.financeiro.model.Usuario;
 import br.com.jope.financeiro.security.config.IAuthenticationFacade;
 import br.com.jope.financeiro.service.DespesaService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("despesas")
+@SecurityRequirement(name = "financeiro-api")
 public class DespesaController {
 	
 	@Autowired

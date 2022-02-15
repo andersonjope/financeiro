@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jope.financeiro.dto.ResumoDTO;
 import br.com.jope.financeiro.service.ResumoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("resumo")
+@SecurityRequirement(name = "financeiro-api")
 public class ResumoController {
 
 	@Autowired

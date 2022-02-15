@@ -40,6 +40,8 @@ public class SecutiryConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
+		.antMatchers("/swagger-ui/**").permitAll()
+		.antMatchers("/v3/api-docs/**").permitAll()
 		.anyRequest().authenticated()
         .and().cors()
         .and().csrf().disable()
