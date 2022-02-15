@@ -18,5 +18,5 @@ spring:
         
 financeiro:
   jwt:
-    expiration: 180000
+    expiration: 3600000
     secret: ${JWT_SECRET}
