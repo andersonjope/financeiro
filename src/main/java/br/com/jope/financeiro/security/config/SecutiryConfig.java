@@ -48,12 +48,10 @@ public class SecutiryConfig extends WebSecurityConfigurerAdapter {
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)        
         .and().exceptionHandling()
                 .authenticationEntryPoint(
-                    (request, response, ex) -> {
-                        response.sendError(
+                    (request, response, ex) -> response.sendError(
                             HttpServletResponse.SC_UNAUTHORIZED,
                             ex.getMessage()
-                        );
-                    }
+                        )                    
                 )
          .and().addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 	}

@@ -44,7 +44,7 @@ public class ReceitaDTO {
 	}
 
 	public static Page<ReceitaDTO> converte(Page<Receita> findAll) {
-		List<ReceitaDTO> list = findAll.stream().map(r -> new ReceitaDTO(r)).collect(Collectors.toList());
+		List<ReceitaDTO> list = findAll.stream().map(ReceitaDTO::new).collect(Collectors.toList());
 		
 		return new PageImpl<>(list);
 	}

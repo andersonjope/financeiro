@@ -55,10 +55,10 @@ public class DespesaController {
 		DespesaDTO receitaDTO = service.salvar(receita);
 		
 		if(receitaDTO.isMensagem()) {
-			return new ResponseEntity<DespesaDTO>(receitaDTO, NOT_FOUND);
+			return new ResponseEntity<>(receitaDTO, NOT_FOUND);
 		}
 		
-		return new ResponseEntity<DespesaDTO>(receitaDTO, HttpStatus.CREATED);
+		return new ResponseEntity<>(receitaDTO, HttpStatus.CREATED);
 	}
 	
 	@GetMapping
@@ -75,7 +75,7 @@ public class DespesaController {
 		Optional<DespesaDTO> optional = service.findById(id);
 		
 		if(optional.isPresent() && optional.get().isMensagem()) {
-			return new ResponseEntity<DespesaDTO>(optional.get(), NOT_FOUND);
+			return new ResponseEntity<>(optional.get(), NOT_FOUND);
 		}
 		
 		return ResponseEntity.ok(optional.orElse(new DespesaDTO()));
@@ -88,17 +88,17 @@ public class DespesaController {
 		DespesaDTO receitaDTO = service.atualizar(receita);
 		
 		if(receitaDTO.isMensagem()) {
-			return new ResponseEntity<DespesaDTO>(receitaDTO, NOT_FOUND);
+			return new ResponseEntity<>(receitaDTO, NOT_FOUND);
 		}
 		
-		return new ResponseEntity<DespesaDTO>(receitaDTO, HttpStatus.CREATED);
+		return new ResponseEntity<>(receitaDTO, HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<DespesaDTO> deletar(@PathVariable("id") Long id) {
 		DespesaDTO receitaDTO = service.deletar(id);
 		
-		return new ResponseEntity<DespesaDTO>(receitaDTO, OK);
+		return new ResponseEntity<>(receitaDTO, OK);
 	}
 	
 	@GetMapping(params = "descricao")

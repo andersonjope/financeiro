@@ -36,7 +36,7 @@ public class CategoriaDTO {
 	}
 
 	public static Page<CategoriaDTO> converte(Page<Categoria> findAll) {
-		List<CategoriaDTO> list = findAll.stream().map(c -> new CategoriaDTO(c)).collect(Collectors.toList());
+		List<CategoriaDTO> list = findAll.stream().map(CategoriaDTO::new).collect(Collectors.toList());
 		
 		return new PageImpl<>(list);
 	}

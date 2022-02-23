@@ -55,10 +55,10 @@ public class ReceitaController {
 		ReceitaDTO receitaDTO = receitaService.salvar(receita);
 		
 		if(receitaDTO.isMensagem()) {
-			return new ResponseEntity<ReceitaDTO>(receitaDTO, NOT_FOUND);
+			return new ResponseEntity<>(receitaDTO, NOT_FOUND);
 		}
 		
-		return new ResponseEntity<ReceitaDTO>(receitaDTO, HttpStatus.CREATED);
+		return new ResponseEntity<>(receitaDTO, HttpStatus.CREATED);
 	}
 	
 	@GetMapping
@@ -75,7 +75,7 @@ public class ReceitaController {
 		Optional<ReceitaDTO> optional = receitaService.findById(id);
 		
 		if(optional.isPresent() && optional.get().isMensagem()) {
-			return new ResponseEntity<ReceitaDTO>(optional.get(), NOT_FOUND);
+			return new ResponseEntity<>(optional.get(), NOT_FOUND);
 		}
 		
 		return ResponseEntity.ok(optional.orElse(new ReceitaDTO()));
@@ -88,17 +88,17 @@ public class ReceitaController {
 		ReceitaDTO receitaDTO = receitaService.atualizar(receita);
 		
 		if(receitaDTO.isMensagem()) {
-			return new ResponseEntity<ReceitaDTO>(receitaDTO, NOT_FOUND);
+			return new ResponseEntity<>(receitaDTO, NOT_FOUND);
 		}
 		
-		return new ResponseEntity<ReceitaDTO>(receitaDTO, HttpStatus.CREATED);
+		return new ResponseEntity<>(receitaDTO, HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ReceitaDTO> deletar(@PathVariable("id") Long id) {
 		ReceitaDTO receitaDTO = receitaService.deletar(id);
 		
-		return new ResponseEntity<ReceitaDTO>(receitaDTO, OK);
+		return new ResponseEntity<>(receitaDTO, OK);
 	}
 	
 	@GetMapping(params = "descricao")

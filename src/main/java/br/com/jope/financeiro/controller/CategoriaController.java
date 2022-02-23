@@ -41,7 +41,7 @@ public class CategoriaController {
 		Optional<CategoriaDTO> optional = categoriaService.findById(id);
 		
 		if(optional.isPresent() && optional.get().isMensagem()) {
-			return new ResponseEntity<CategoriaDTO>(optional.get(), NOT_FOUND);
+			return new ResponseEntity<>(optional.get(), NOT_FOUND);
 		}
 		
 		return ResponseEntity.ok(optional.orElse(new CategoriaDTO()));

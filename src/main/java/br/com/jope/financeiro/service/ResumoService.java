@@ -28,7 +28,7 @@ public class ResumoService {
 		List<DespesaValor> despesaValor = despesaRepository.loadDespesaPorAnoMes(ano, mes);
 		List<DespesaCategoriaValor> despesaCategoriaValor = despesaRepository.loadDespesaCategoriaPorAnoMes(ano, mes);
 		
-		List<ResumoCategoriaDTO> resumoCategoriaList = new ArrayList<>();;
+		List<ResumoCategoriaDTO> resumoCategoriaList = new ArrayList<>();
 		
 		despesaCategoriaValor.stream().forEach(new Consumer<DespesaCategoriaValor>() {
 
