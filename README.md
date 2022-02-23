@@ -31,7 +31,7 @@ Foi disponibilizado na aplicação o Swagger para agilizar as consultas/testes.
 
 # Sonarcloud
 
-Aplicação analisada e ajustada conforme os parâmtros definidos no Sonarcloud.
+Aplicação analisada e ajustada conforme os parâmetros definidos no Sonarcloud.
 
 # Heroku
 
