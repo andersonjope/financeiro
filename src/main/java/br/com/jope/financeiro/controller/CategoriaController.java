@@ -44,7 +44,7 @@ public class CategoriaController {
 			return new ResponseEntity<CategoriaDTO>(optional.get(), NOT_FOUND);
 		}
 		
-		return ResponseEntity.ok(optional.get());
+		return ResponseEntity.ok(optional.orElse(new CategoriaDTO()));
 	}
 	
 }

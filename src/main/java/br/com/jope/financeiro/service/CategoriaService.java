@@ -48,7 +48,7 @@ public class CategoriaService {
 			repository.save(optional.get());
 			return new CategoriaDTO(optional.get());
 		}
-		return CategoriaDTO.converte(optional).get();
+		return CategoriaDTO.converte(optional).orElse(new CategoriaDTO());
 	}
 
 	public CategoriaDTO deletar(Long id) {
@@ -56,7 +56,7 @@ public class CategoriaService {
 		if(optional.isPresent()) {
 			repository.deleteById(id);			
 		}		
-		return CategoriaDTO.converte(optional).get();
+		return CategoriaDTO.converte(optional).orElse(new CategoriaDTO());
 	}
 
 }

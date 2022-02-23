@@ -40,7 +40,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
 	private void autenticarCliente(String token) {
 		Long idUsuario = tokenService.getUsuario(token);
-		Usuario usuario = usuarioService.findById(idUsuario).get();
+		Usuario usuario = usuarioService.findById(idUsuario).orElse(null);
 		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}

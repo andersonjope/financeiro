@@ -44,9 +44,9 @@ public class DespesaForm {
 	}
 
 	private Categoria getCategoria() {
-		Categoria categoria = new Categoria();
-		categoria.setIdCategoria(this.categoria);
-		return categoria;
+		Categoria retorno = new Categoria();
+		retorno.setIdCategoria(this.categoria);
+		return retorno;
 	}
 
 	public Despesa converte(Long id) {

@@ -1,9 +1,11 @@
 package br.com.jope.financeiro.dto;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -34,13 +36,9 @@ public class CategoriaDTO {
 	}
 
 	public static Page<CategoriaDTO> converte(Page<Categoria> findAll) {
-		return findAll.map(new Function<Categoria, CategoriaDTO>() {
-
-			@Override
-			public CategoriaDTO apply(Categoria categoria) {
-				return new CategoriaDTO(categoria);
-			}
-		});
+		List<CategoriaDTO> list = findAll.stream().map(c -> new CategoriaDTO(c)).collect(Collectors.toList());
+		
+		return new PageImpl<>(list);
 	}
 	
 	public static Optional<CategoriaDTO> converte(Optional<Categoria> optional) {

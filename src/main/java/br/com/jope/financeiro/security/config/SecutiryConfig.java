@@ -45,7 +45,7 @@ public class SecutiryConfig extends WebSecurityConfigurerAdapter {
 		.anyRequest().authenticated()
         .and().cors()
         .and().csrf().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)        
         .and().exceptionHandling()
                 .authenticationEntryPoint(
                     (request, response, ex) -> {
@@ -58,8 +58,8 @@ public class SecutiryConfig extends WebSecurityConfigurerAdapter {
          .and().addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 
-	public static void main(String[] args) {
-		System.out.println(new BCryptPasswordEncoder().encode("123456"));
-	}
+//	public static void main(String[] args) {
+//		System.out.println(new BCryptPasswordEncoder().encode("123456"));
+//	}
 	
 }

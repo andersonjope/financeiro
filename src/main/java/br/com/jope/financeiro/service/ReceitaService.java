@@ -61,7 +61,7 @@ public class ReceitaService {
 			repository.save(receitaRecuperada);
 			return new ReceitaDTO(receitaRecuperada);
 		}
-		return ReceitaDTO.converte(optional).get();
+		return ReceitaDTO.converte(optional).orElse(new ReceitaDTO());
 	}
 
 	public ReceitaDTO deletar(Long id) {
@@ -69,7 +69,7 @@ public class ReceitaService {
 		if(optional.isPresent()) {
 			repository.deleteById(id);			
 		}		
-		return ReceitaDTO.converte(optional).get();
+		return ReceitaDTO.converte(optional).orElse(new ReceitaDTO());
 	}
 
 	private Month getMonth() {

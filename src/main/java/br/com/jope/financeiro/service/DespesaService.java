@@ -57,7 +57,7 @@ public class DespesaService {
 			repository.save(despesaRecuperada);
 			return new DespesaDTO(despesaRecuperada);
 		}
-		return DespesaDTO.converte(optional).get();
+		return DespesaDTO.converte(optional).orElse(new DespesaDTO());
 	}
 
 	public DespesaDTO deletar(Long id) {
@@ -65,7 +65,7 @@ public class DespesaService {
 		if(optional.isPresent()) {
 			repository.deleteById(id);			
 		}		
-		return DespesaDTO.converte(optional).get();
+		return DespesaDTO.converte(optional).orElse(new DespesaDTO());
 	}
 
 	public List<DespesaDTO> findByDescricaoContainingIgnoreCase(String descricao){

@@ -78,7 +78,7 @@ public class ReceitaController {
 			return new ResponseEntity<ReceitaDTO>(optional.get(), NOT_FOUND);
 		}
 		
-		return ResponseEntity.ok(optional.get());
+		return ResponseEntity.ok(optional.orElse(new ReceitaDTO()));
 	}
 	
 	@PutMapping("/{id}")

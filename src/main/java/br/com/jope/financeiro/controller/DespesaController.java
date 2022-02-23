@@ -78,7 +78,7 @@ public class DespesaController {
 			return new ResponseEntity<DespesaDTO>(optional.get(), NOT_FOUND);
 		}
 		
-		return ResponseEntity.ok(optional.get());
+		return ResponseEntity.ok(optional.orElse(new DespesaDTO()));
 	}
 	
 	@PutMapping("/{id}")
