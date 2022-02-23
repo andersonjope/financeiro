@@ -29,9 +29,14 @@ MySQL 8.0.24
 
 Foi disponibilizado na aplicação o Swagger para agilizar as consultas/testes.
 
+# Sonarcloud
+
+Aplicação analisada e ajustada conforme os parâmtros definidos no Sonarcloud.
+
 # Heroku
 
 Aplicação foi disponibilizada na plataforma de serviço na nuvem do Heroku, acesse aqui [Controle Financeiro](https://finanaceiro-main-avozltgcgi3pe.herokuapp.com/swagger-ui/index.html)
+
 
 ### 🛠 Tecnologias
 
@@ -42,3 +47,4 @@ As seguintes ferramentas foram usadas na elaboração do projeto:
 - [Spring Tools](https://spring.io/tools)
 - [MySQL](https://www.mysql.com/)
 - [Swagger](https://swagger.io/specification/)
+- [SonarCloud](https://sonarcloud.io/)

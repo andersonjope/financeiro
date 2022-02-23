@@ -1,8 +1,7 @@
 package br.com.jope.financeiro.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,29 +27,25 @@ public class ResumoService {
 		List<DespesaValor> despesaValor = despesaRepository.loadDespesaPorAnoMes(ano, mes);
 		List<DespesaCategoriaValor> despesaCategoriaValor = despesaRepository.loadDespesaCategoriaPorAnoMes(ano, mes);
 		
-		List<ResumoCategoriaDTO> resumoCategoriaList = new ArrayList<>();
-		
-		despesaCategoriaValor.stream().forEach(new Consumer<DespesaCategoriaValor>() {
-
-			@Override
-			public void accept(DespesaCategoriaValor t) {
-				ResumoCategoriaDTO build = ResumoCategoriaDTO.builder()
-						.valor(t.getValor().toString())
-						.descricaoCategoria(EnumCategoria.getCategoria(t.getCategoria()).getDescricao())
+		if(!receitaValor.isEmpty() && receitaValor.get(0) != null) {
+			List<ResumoCategoriaDTO> resumoCategoriaList = despesaCategoriaValor.stream().map(dcv -> 
+			ResumoCategoriaDTO.builder()
+				.valor(dcv.getValor().toString())
+				.descricaoCategoria(EnumCategoria.getCategoria(dcv.getCategoria()).getDescricao())
+				.build()
+					).collect(Collectors.toList());
+			
+			ResumoDTO resumoDTO = ResumoDTO.builder()
+					.valorTotalReceitas(receitaValor.get(0).getValor().toString())
+					.valorTotalDespesas(despesaValor.get(0).getValor().toString())
+					.resumoCategoriaList(resumoCategoriaList)				
 					.build();
-				resumoCategoriaList.add(build);
-			}
-		});
-		
-		ResumoDTO resumoDTO = ResumoDTO.builder()
-				.valorTotalReceitas(receitaValor.get(0).getValor().toString())
-				.valorTotalDespesas(despesaValor.get(0).getValor().toString())
-				.resumoCategoriaList(resumoCategoriaList)				
-			.build();
-		
-		resumoDTO.calculoSaldo();
-		
-		return resumoDTO;
+			
+			resumoDTO.calculoSaldo();
+			
+			return resumoDTO;
+		}
+		return ResumoDTO.builder().build();
 	}
 
 }

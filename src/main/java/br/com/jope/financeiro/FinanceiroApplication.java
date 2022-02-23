@@ -29,11 +29,11 @@ public class FinanceiroApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		Arrays.asList(EnumCategoria.values()).forEach(ec -> salvar(ec));
-		Arrays.asList(EnumUsuario.values()).forEach(eu -> salvar(eu));
+		Arrays.asList(EnumCategoria.values()).stream().map(ec -> salvar(ec));
+		Arrays.asList(EnumUsuario.values()).stream().map(eu -> salvar(eu));
 	}
 
-	private void salvar(EnumUsuario enumUsuario) {
+	private Usuario salvar(EnumUsuario enumUsuario) {
 		Usuario usuario = new Usuario();
 		usuario.setId(enumUsuario.getCodigo());
 		usuario.setNome(enumUsuario.getNome());
@@ -41,13 +41,15 @@ public class FinanceiroApplication implements ApplicationRunner {
 		usuario.setSenha(enumUsuario.getSenha());
 		usuario.setPerfil(enumUsuario.getPerfil());
 		usuarioService.salvar(usuario);
+		return usuario;
 	}
 
-	private void salvar(EnumCategoria enumCategoria) {
+	private Categoria salvar(EnumCategoria enumCategoria) {
 		Categoria categoria = new Categoria();
 		categoria.setIdCategoria(enumCategoria.getCodigo());
 		categoria.setDescricao(enumCategoria.getDescricao());
 		categoriaService.salvar(categoria);
+		return categoria;
 	}
 
 }

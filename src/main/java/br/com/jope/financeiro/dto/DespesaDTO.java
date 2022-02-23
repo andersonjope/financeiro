@@ -1,10 +1,12 @@
 package br.com.jope.financeiro.dto;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -44,13 +46,9 @@ public class DespesaDTO {
 	}
 
 	public static Page<DespesaDTO> converte(Page<Despesa> findAll) {
-		return findAll.map(new Function<Despesa, DespesaDTO>() {
-
-			@Override
-			public DespesaDTO apply(Despesa receita) {
-				return new DespesaDTO(receita);
-			}
-		});
+		List<DespesaDTO> list = findAll.stream().map(DespesaDTO::new).collect(Collectors.toList());
+		
+		return new PageImpl<>(list);
 	}
 	
 	public static Optional<DespesaDTO> converte(Optional<Despesa> optional) {
